@@ -1,0 +1,120 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Random user api</title>
+
+    <style>
+        body{
+            box-sizing: border-box;
+            margin: 10%  0 ;
+            padding: 0;
+            /* background-color: #FFFBEB; */
+            color: #222222;
+            background-color:#ECF9FF;
+        }
+        h2{
+            margin: 10px auto;
+            text-align: center;
+        }
+        .user-profile{
+            width: 520px;
+            margin: 0 auto;
+            display: flex;
+            box-shadow: 5px 5px 15px rgba(36, 36, 36, 0.12);
+            border-radius: 10px;
+            background-color: rgba(255, 255, 255, 0.955);
+        }
+        .image-side{
+            padding: 10px;
+        }
+        .image-side img{
+            border-radius: 100px;
+            width: auto;
+            height: 200px;
+        }
+        .info-side{
+            text-align: left;
+            justify-content: center;
+            padding-left: 20px;
+        }
+        .info-side .name{
+            font-size: 1.7rem;
+            padding: 0;
+
+        }
+
+        .info-side .phone-number{
+            text-align: center;
+
+        }
+
+
+    </style>
+</head>
+<body>
+
+    <h2>Random user from API</h2>
+
+
+
+    <div class="user-profile">
+
+        <!-- miejsce na zdjecie -->
+        <div class="image-side"><img id="img" src="" alt=""></div>
+
+        <div class="info-side">
+            <p class="name" id="name"></p>
+            <p class="email"></p>
+            <p class="phone-number"></p>
+            
+
+        </div>
+
+    </div>
+
+    <script>
+
+        window.onload = function(){
+
+        fetch('https://randomuser.me/api')
+        .then(response => response.json())
+        .then(data => processData(data));//przekazanie naszej funckcji
+
+        function processData(data){
+            let res = data.results[0]
+            console.log(res)
+
+            let userName = res.name;
+
+            let fullNameString = `${userName.title} ${userName.first} ${userName.last}`
+
+
+
+            let userEmail = res.email;
+            let userPhone = res.phone;
+
+            let userPic = res.picture.large;
+
+            console.log(userPic)
+
+            document.getElementById('img').src = userPic;
+            document.getElementsByClassName('name')[0].innerHTML = fullNameString;
+            document.getElementsByClassName('email')[0].innerHTML = userEmail;
+            document.getElementsByClassName('phone-number')[0].innerHTML = userPhone;
+            
+        }
+
+    }
+
+
+
+
+
+
+
+    </script>
+</body>
+</html>
